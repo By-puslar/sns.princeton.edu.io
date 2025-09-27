@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hacked by Pulsar</title>
+  <style>
+    /* Arka plan - neon gradient + hafif hareket */
+    :root{
+      --bg1: #020024;
+      --bg2: #090979;
+      --bg3: #00d4ff;
+      --accent: #ff4d6d;
+      --glow: 0 0 18px rgba(0,212,255,0.25), 0 0 40px rgba(255,77,109,0.07);
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1000px 600px at 10% 10%, rgba(0,212,255,0.06), transparent 10%),
+                  linear-gradient(135deg,var(--bg1), var(--bg2));
+      color:#e6f7ff;
+      overflow:hidden;
+    }
+
+    /* Ortala ve kart */
+    .wrap{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:2rem;
+      gap:1rem;
+      flex-direction:column;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 2.2rem 3rem;
+      border-radius:12px;
+      box-shadow: 0 10px 40px rgba(2, 9, 33, 0.6);
+      backdrop-filter: blur(6px) saturate(120%);
+      transform: translateY(0);
+      transition: transform 0.25s ease;
+      position:relative;
+      width: min(860px, 92%);
+    }
+
+    .title {
+      font-size: clamp(28px, 5.5vw, 56px);
+      letter-spacing: 0.08em;
+      font-weight:800;
+      text-transform: uppercase;
+      margin: 0 0 0.25rem 0;
+      line-height:0.95;
+      color: #cfeeff;
+      text-shadow: 0 0 10px rgba(0,212,255,0.12);
+      position:relative;
+    }
+
+    /* Glitch effect */
+    .title .glitch {
+      display:inline-block;
+      position:relative;
+    }
+    .title .glitch::before,
+    .title .glitch::after{
+      content: attr(data-text);
+      position:absolute;
+      left:0;
+      top:0;
+      width:100%;
+      clip-path: inset(0 0 0 0);
+      opacity:0.85;
+    }
+    .title .glitch::before{
+      color:#ff6b88;
+      transform: translate(-2px, -2px);
+      mix-blend-mode: screen;
+      filter: blur(0.6px);
+      animation: g1 2.5s infinite linear;
+    }
+    .title .glitch::after{
+      color:#00f0ff;
+      transform: translate(2px, 2px);
+      mix-blend-mode: screen;
+      filter: blur(0.6px);
+      animation: g2 3.1s infinite linear;
+    }
+    @keyframes g1 {
+      0% { transform: translate(-2px,-2px) skewX(0deg); clip-path: inset(0 0 80% 0); }
+      40% { transform: translate(3px,0px) skewX(0.8deg); clip-path: inset(10% 0 30% 0); }
+      70% { transform: translate(-1px,2px) skewX(-0.4deg); clip-path: inset(40% 0 10% 0); }
+      100% { transform: translate(-2px,-2px) skewX(0deg); clip-path: inset(0 0 80% 0); }
+    }
+    @keyframes g2 {
+      0% { transform: translate(2px,2px) skewX(0deg); clip-path: inset(80% 0 0 0); }
+      35% { transform: translate(-3px,1px) skewX(-1deg); clip-path: inset(30% 0 10% 0); }
+      65% { transform: translate(1px,-2px) skewX(0.5deg); clip-path: inset(10% 0 40% 0); }
+      100% { transform: translate(2px,2px) skewX(0deg); clip-path: inset(80% 0 0 0); }
+    }
+
+    .subtitle {
+      margin:0;
+      font-size: clamp(12px, 2vw, 15px);
+      color: #bfeeff;
+      opacity:0.9;
+      letter-spacing:0.06em;
+    }
+
+    /* Pulsing accent line */
+    .accent {
+      width:100%;
+      height:6px;
+      border-radius:6px;
+      margin:18px 0 12px;
+      background: linear-gradient(90deg, rgba(0,212,255,0.95), rgba(255,77,109,0.98));
+      box-shadow: var(--glow);
+      animation: pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scaleX(0.98); opacity:0.9; }
+      50% { transform: scaleX(1.02); opacity:1; }
+      100% { transform: scaleX(0.98); opacity:0.9; }
+    }
+
+    /* Footer small print */
+    .meta {
+      margin-top:14px;
+      font-size:12px;
+      color: rgba(200,240,255,0.65);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+
+    .meta .tag{
+      background: rgba(255,255,255,0.02);
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.03);
+      font-weight:600;
+      color:#e6f7ff;
+      letter-spacing:0.06em;
+    }
+
+    /* Hover lift */
+    .card:hover{ transform: translateY(-8px); }
+
+    /* Subtle animated matrix-ish numbers in background */
+    .matrix {
+      position: absolute;
+      inset:0;
+      pointer-events:none;
+      mix-blend-mode: screen;
+      opacity:0.07;
+      background-image:
+        radial-gradient(circle at 20% 15%, rgba(0,212,255,0.12), transparent 5%),
+        radial-gradient(circle at 80% 80%, rgba(255,77,109,0.08), transparent 5%);
+      mask-image: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.2));
+    }
+
+    /* small responsive tweak */
+    @media (max-width:520px){
+      .card{ padding:1.4rem; border-radius:10px; }
+      .accent{ height:4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="h1">
+      <h1 id="h1" class="title">
+        <span class="glitch" data-text="HACKED BY PULSAR">HACKED BY PULSAR</span>
+      </h1>
+
+      <div class="accent" aria-hidden="true"></div>
+
+      <p class="subtitle">This is a demo page — yalnızca test/öğrenme amaçlıdır.</p>
+
+      <div class="meta" aria-hidden="true">
+        <div class="tag">Pulsar</div>
+        <div style="font-size:12px;color:rgba(200,240,255,0.55)">Demo • 2025</div>
+      </div>
+
+      <div style="height:6px"></div>
+    </div>
+
+    <small style="color:rgba(200,240,255,0.45); font-size:12px; margin-top:10px;">
+      İzinli olmayan alanlarda kullanmayın — hukuki sorumluluk size aittir.
+    </small>
+  </div>
+
+  <div class="matrix" aria-hidden="true"></div>
+
+  <script>
+    // Küçük etkileşim: tıklayınca animasyon ve küçük bir konsol mesajı
+    document.querySelector('.card').addEventListener('click', function(){
+      this.animate([{ transform:'translateY(-10px)' }, { transform:'translateY(0)' }], { duration:420, easing:'cubic-bezier(.2,.9,.3,1)' });
+      console.log('%cHacked by Pulsar — demo page', 'color:#00f0ff; background:#001; padding:6px; border-radius:4px;');
+    });
+  </script>
+</body>
+</html>
